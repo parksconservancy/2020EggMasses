@@ -170,12 +170,7 @@
 	<div id='map'></div>
 
 <div id='footer'>
-    <div>
-	<p><img src="https://uky-gis.github.io/graphics/logo-color-400px.png" class="footer-img">
-    This bivariate map represents wildfires in California from 2009-2019. The symbol size represents size in acres >= 100 and the colors represent the five most common cause of fire during this time period. The data came from the <a href="https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=wildfire">U.S. Forest Service</a>;
-					FIRESTAT Fire Occurrence - Yearly Update. Map created by <a href="https://github.com/zac-stanley">Zac Stanley</a>, Spring  2020.</p>
-    </div>
-</div>
+ </div>
 </body>
 
 	<header>
@@ -192,34 +187,71 @@
 	
 	<script>
 		// map options
-		var options = {
-			center: [37.9803150, -122.6398660],
-			zoomSnap: .11,
-			zoom: 14.5
-		}
+			var options = {
+				center: [37.9803150, -122.6398660],
+				zoomSnap: .11,
+				zoom: 14.5
+			}
 
-		// create a Leaflet map in our division container with id of 'map'
-		var map = L.map('map', options);
+			// create a Leaflet map in our division container with id of 'map'
+			var map = L.map('map', options);
 
-		var styles = {
-			weight: 1,
-			stroke: 1,
-			fillOpacity: .9
-		}
-		
-		// add egg mass counts
+			var styles = {
+				weight: 1,
+				stroke: 1,
+				fillOpacity: .9
+			}
 
-		L.geoJson(eggmasses, {
-  		  pointToLayer: function(feature,latlng) {
-    		return L.circleMarker(latlng, {
-      			color: 'orange',
-      			weight: 1,
-      			fillColor: 'yellow',
-      			fillOpacity: .8,
-      			radius: feature.properties.Count * 2
-    });
-  }
+			// add egg mass counts
+
+			const eggMassCounts =	L.geoJson(eggmasses, {
+				pointToLayer: function (feature, latlng) {
+					return L.circleMarker(latlng, {
+						color: 'orange',
+						weight: 1,
+						fillColor: 'yellow',
+						fillOpacity: .8,
+						radius: feature.properties.Count * 2
+					});
+				},
+
+				onEachFeature: function (feature, layer) {
+					layer.on('mouseover', function () {
+						layer.setStyle({
+							fillColor: 'red'
+						});
+					});
+					layer.on('mouseout', function () {
+						layer.setStyle({
+							fillColor: 'yellow'
+						});
+					});
+					// zoom to fit screen
+// var zoomEggs = eggMassCounts.getBounds() 	
+
+// map.fitBounds(zoomEggs, {
+// 	maxzoom: 8
+// })
+					//tooltip = `Stream Name: ${layer.feature.properties.Name} <br> Number of Egg Masses ${layer.feature.properties.Count}`
+					layer.bindTooltip(`Stream Name: <b>${layer.feature.properties.Name}</b> <br> Number of Egg Masses: <b>${layer.feature.properties.Count}</b>`, { sticky: true });
+}
+
 }).addTo(map);
+
+
+var zoomEggs = eggMassCounts.getBounds() 	
+
+map.fitBounds(zoomEggs, {
+	padding: [100,100],
+	maxzoom: 18
+})
+
+
+
+
+
+
+
 
 	</script>
 	</body>
