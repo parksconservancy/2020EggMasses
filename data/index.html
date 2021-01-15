@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Green House Gas Emissions</title>
+    <title>Foothill Yellow Legged Frog Egg Masses</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
@@ -88,18 +88,13 @@
     <div id='map'></div>
 
     <section id="side-panel">
-
-        
-
         <h3>Egg Mass Counts</h3>
         <div id='legend'>
             <div id="legend-large"></div>
             <div id="legend-small"></div>
             <div id="legend-large-label"></div>
             <div id="legend-small-label"></div>
-        </div>
-        
-
+        </div>     
     </section>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -168,20 +163,14 @@
         function style(feature) {
 
             var styleOptions = {
-
-                fillOpacity: .6,
+				fillColor: '#7D2A96',
+                fillOpacity: .65,
                 color: "whitesmoke",
                 weight: 1
 
             }
 
-        //     if (feature.properties.TYPE === 'fc') {
-        //         styleOptions.fillColor = '#bd4932';
-        //     } else {
-        //         styleOptions.fillColor = '#105b63';
-        //     }
-
-        //     return styleOptions;
+            return styleOptions;
 
          }
 
@@ -191,6 +180,7 @@
                 mouseover: function () {
 
                     layer.setStyle({
+						fillColor: '#7D2A96',
                         color: "yellow",
                         weight: 3
                     });
@@ -199,23 +189,14 @@
                 mouseout: function () {
 
                     layer.setStyle({
-                        color: "whitesmoke",
+						fillColor: '#7D2A96',
+						color: "whitesmoke",
                         weight: 1
                     });
                 }
             });
 
-        //     var typeCode = {
-        //         'fc': "fuel combustion",
-        //         'pe': "process emissions"
-        //     }
-
-        //     var toolTipInfo = "Name: " + feature.properties.FACILITY_NAME + "<br>" +
-        //         "C02: " + feature.properties.GHG_QUANTITY.toLocaleString() + "<br>" +
-        //         "Type: " + typeCode[feature.properties.TYPE]
-
-
-        //     layer.bindTooltip(toolTipInfo, { sticky: true });
+        layer.bindTooltip(`Stream Name: <b>${layer.feature.properties.Name}</b> <br> Number of Egg Masses: <b>${layer.feature.properties.Count}</b>`, { sticky: true });
 
          }
 
@@ -241,7 +222,7 @@
               $("#legend-large-label").html(data.features[0].properties.Count.toLocaleString());
 
               $("#legend-large-label").css({
-                  'left': largeDiameter + 30,
+                  'left': largeDiameter + 45,
                   'top' : -8
               });
 
@@ -256,7 +237,7 @@
 
               $("#legend-small-label").css({
                   'top': smallDiameter - 8,
-                  'left': largeDiameter + 30
+                  'left': largeDiameter + 45
               });
 
               $("<hr class='large'>").insertBefore("#legend-large-label")
