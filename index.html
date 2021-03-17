@@ -88,6 +88,9 @@
     <div id='map'></div>
 
     <section id="side-panel">
+        <p><span style='color: #7D2A96; font-weight: bold;'>Existing Population</span> and <span style='color: #1b9666; font-weight: bold;'>Population Discovered in 2018</span>.
+
+
         <h3>Egg Mass Counts</h3>
         <div id='legend'>
             <div id="legend-large"></div>
@@ -170,6 +173,12 @@
 
             }
 
+            if (feature.properties.Name === 'Cascade Creek') {
+                styleOptions.fillColor = '#1b9666';
+            } else {
+                styleOptions.fillColor = '#7D2A96';
+            }
+
             return styleOptions;
 
          }
@@ -180,7 +189,7 @@
                 mouseover: function () {
 
                     layer.setStyle({
-						fillColor: '#7D2A96',
+						//fillColor: '#7D2A96',
                         color: "yellow",
                         weight: 3
                     });
@@ -189,7 +198,7 @@
                 mouseout: function () {
 
                     layer.setStyle({
-						fillColor: '#7D2A96',
+						//fillColor: '#7D2A96',
 						color: "whitesmoke",
                         weight: 1
                     });
